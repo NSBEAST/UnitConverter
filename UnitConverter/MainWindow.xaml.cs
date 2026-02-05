@@ -9,7 +9,7 @@ namespace UnitConverter
     public partial class MainWindow : Window
     { 
 
-        ConversionSelector conversionSelector = new ConversionSelector();
+        ConversionSelector conversionSelector = new();
         public MainWindow()
         {
             InitializeComponent();
@@ -45,13 +45,12 @@ namespace UnitConverter
             else return;
 
             double convertedValue = ConvertLength(value, inputUnit, outputUnit);
-
-            OutputTextBlock.Text = convertedValue.ToString();
+            double roundedConvertedValue = Math.Round(convertedValue, 5);
+            OutputTextBlock.Text = roundedConvertedValue.ToString();
         }
 
         private double ConvertLength(double value, string from, string to)
         {
-            // LengthFactors now store meters-per-unit, so convert to meters then to target unit:
             double fromFactor = conversionSelector.LengthFactors[from];
             double toFactor = conversionSelector.LengthFactors[to];
             return (value * fromFactor) / toFactor;
